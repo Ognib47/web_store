@@ -15,12 +15,5 @@ ActiveAdmin.register Product do
       f.input :image, as: :file
     end
     f.actions
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:category_id, :name, :description, :cost_cents, :product_status]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  end
 end

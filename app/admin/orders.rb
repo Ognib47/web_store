@@ -6,7 +6,7 @@ ActiveAdmin.register Order do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :customer_id, :gst_rate, :pst_rate, :total_cost
+  permit_params :gst_rate, :pst_rate, :total_cost
   #
   # or
   #
