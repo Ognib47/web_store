@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 2020_04_02_184231) do
     t.float "total_cost"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "users_id", null: false
-    t.index ["users_id"], name: "index_orders_on_users_id"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -125,19 +125,19 @@ ActiveRecord::Schema.define(version: 2020_04_02_184231) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "provinces_id"
+    t.integer "province_id"
     t.string "name"
     t.string "address"
     t.string "phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["provinces_id"], name: "index_users_on_provinces_id"
+    t.index ["province_id"], name: "index_users_on_province_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "orderproducts", "orders"
   add_foreign_key "orderproducts", "products"
-  add_foreign_key "orders", "users", column: "users_id"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
-  add_foreign_key "users", "provinces", column: "provinces_id"
+  add_foreign_key "users", "provinces"
 end

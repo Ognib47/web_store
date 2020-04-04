@@ -2,4 +2,7 @@
 
 class Province < ApplicationRecord
   has_many :user
+  def name
+    province
+  end
 end
