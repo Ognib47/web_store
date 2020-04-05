@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = if params['category_id']
-                  Product.incudes(:category).where(category_id: params['category_id'])
+                  Product.includes(:category).where(category_id: params['category_id'])
                 else
                   Product.includes(:category).all
                 end

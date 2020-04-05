@@ -21,7 +21,7 @@
           <div class="content">
             <p><%= product.description %></p>
             <% if @cart.include?(product) %>
-              <p><%= button_to 'Remove', remove_from_cart_path(product), method: :delete %></p>
+              <p><%= link_to 'Remove', remove_from_cart_path(product), method: :delete %></p>
             <% else %>
               <p><%= link_to 'add', add_to_cart_path(product), method: :post %></p>
             <% end %>
