@@ -16,6 +16,10 @@ class ProductsController < ApplicationController
     @product = Product.includes(:category).find(params['id'])
   end
 
+  def search
+    @products = Product.where('name LIKE ?', "%#{params[:search_term]}%")
+  end
+
   def add_to_cart
     id = params['id'].to_i
     session[:cart] << id unless session[:cart].include?(id)
