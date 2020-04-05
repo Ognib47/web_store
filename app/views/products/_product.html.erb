@@ -10,7 +10,7 @@
               <p>There is no image for this product</p>
             <% else %>
               <figure class="image is-48x48">
-                <img src="assets/<%= product.image %>" alt="barnney">
+                <%= image_tag product.image %>
               </figure>
             <% end %>
             </div>
