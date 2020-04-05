@@ -1,3 +1,4 @@
+
   <% if product.nil? %>
     <p>THere are no products</p>
   <% else %>
@@ -6,9 +7,7 @@
         <div class="card-content">
           <div class="media">
             <div class="media-left">
-            <% if product.nil? %>
-              <p>There is no image for this product</p>
-            <% else %>
+            <% if product.image.present? %>
               <figure class="image is-48x48">
                 <%= image_tag product.image %>
               </figure>
@@ -21,6 +20,11 @@
           </div>
           <div class="content">
             <p><%= product.description %></p>
+            <% if @cart.include?(product) %>
+              <p><%= button_to 'Remove', remove_from_cart_path(product), method: :delete %></p>
+            <% else %>
+              <p><%= link_to 'add', add_to_cart_path(product), method: :post %></p>
+            <% end %>
           </div>
         </div>
       </div>

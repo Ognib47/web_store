@@ -33,8 +33,6 @@ category_array.each do |category|
 end
 
 10.times do
-  province_name = province_array[rand(0..12)]
-
   User.create!(
     province: Province.order('RANDOM()').first,
     name: Faker::FunnyName.unique.name,
@@ -45,9 +43,9 @@ end
   )
 end
 
-# if Rails.env.development?
-#   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-# end
+if Rails.env.development?
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+end
 
 puts "Created #{Province.count} products."
 puts "Created #{Category.count} categories."

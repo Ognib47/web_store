@@ -1,0 +1,15 @@
+<div>
+  <ul class='in-line'>
+    <li><%= link_to 'Products', products_url %></li>
+    <li><div class="dropdown ">
+      <span>Categories</span>
+      <div class="dropdown-content">
+        <% Category.all.each do | category | %>
+          <p><%= link_to category.name, products_url(category_id: category.id) %></p>
+        <% end %>
+      </div>
+    </div>
+  </li>
+  </ul>
+
+</div>

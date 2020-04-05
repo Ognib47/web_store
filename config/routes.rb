@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   get 'orders/show'
   resources 'products', only: %i[index show]
+  post 'products/add_to_cart/:id', to: 'products#add_to_cart', as: 'add_to_cart'
+  delete 'products/remove_from_cart', to: 'products#remove_from_cart', as: 'remove_from_cart'
   resources 'categories', only: %i[index show]
 
   # get 'categories/index'
