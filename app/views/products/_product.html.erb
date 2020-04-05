@@ -1,0 +1,31 @@
+  <% if product.nil? %>
+    <p>THere are no products</p>
+  <% else %>
+    <div class='column is-one-quarter'>
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+            <% if product.nil? %>
+              <p>There is no image for this product</p>
+            <% else %>
+              <figure class="image is-48x48">
+                <img src="assets/<%= product.image %>" alt="barnney">
+              </figure>
+            <% end %>
+            </div>
+            <div class="media-content">
+              <p class="title is-4"><%= link_to product.name, product %></p>
+              <p class="title is-4"><%= link_to product.category.name, products_path(category_id: product.category.id) %></p>
+            </div>
+          </div>
+          <div class="content">
+            <p><%= product.description %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+

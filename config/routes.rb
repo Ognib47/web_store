@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'orders/show'
-  get 'products/index'
-  get 'products/show'
-  get 'categories/index'
-  get 'categories/show'
+  resources 'products', only: %i[index show]
+  resources 'categories', only: %i[index show]
+
+  # get 'categories/index'
+  # get 'categories/show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
