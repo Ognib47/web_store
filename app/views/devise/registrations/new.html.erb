@@ -9,6 +9,15 @@
   </div>
 
   <div class="field">
+    <%= f.select :province_id, options_from_collection_for_select(Province.all, :id, :province) %><br />
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, autofocus: true %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
