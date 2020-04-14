@@ -2,8 +2,11 @@
   <summary>Shopping Cart</summary>
   <ul>
     <% @cart.each do |product| %>
-      <li><%= product.name %> - <%= link_to 'Remove', remove_from_cart_path(product), method: :delete %></li>
+      <li>
+        <%= product.name %> - <%= link_to 'Remove', remove_from_cart_path(product), method: :delete %>
+      </li>
     <% end %>
   </ul>
+  <p><%= button_to 'Buy Items', checkout_create_path, params: {cart: @cart}, remote: true %></p>
 </details>
 
