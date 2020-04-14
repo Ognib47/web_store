@@ -6,18 +6,16 @@ class ProductsController < ApplicationController
 
   def index
     @products = if params['category_id']
+                  session[:catetory] = params['category_id']
                   Product.includes(:category).where(category_id: params['category_id'])
                 else
+                  session[:catetory] = ''
                   Product.includes(:category).all
                 end
   end
 
   def show
     @product = Product.includes(:category).find(params['id'])
-  end
-
-  def search
-    @products = Product.where('name LIKE ?', "%#{params[:search_term]}%")
   end
 
   def add_to_cart
@@ -31,14 +29,24 @@ class ProductsController < ApplicationController
     session[:cart].delete(id)
     redirect_to products_url
   end
-end
 
-private
+  def search
+    # DANGER DANGER
+    if session[:catetory] != ''
+      @products = Product.where('category_id = ? AND  name LIKE ?', session[:catetory], "%#{params[:search_term]}%")
+    else
+      @products = Product.where('name LIKE ?', "%#{params[:search_term]}%")
+    end
+  end
+end
 
 def initialize_session
   session[:cart] ||= []
+  session[:catetory] ||= ''
 end
 
 def load_cart
   @cart = Product.find(session[:cart])
 end
+
+# Get /search/?search_term=user+search+terms
