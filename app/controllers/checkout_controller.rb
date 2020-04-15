@@ -9,10 +9,44 @@ class CheckoutController < ApplicationController
         nil
       end
     end
-    total_cost = 0
+
+    line_item_collection = []
     gst = Gst.first
     province = current_user.province
     pst = Pst.find_by(province: province.province)
+
+    if product
+      line_item = {
+        name: product.name,
+        description: product.description,
+        amount: product.cost_cents,
+        currency: 'cad',
+        quantity: 1
+      }
+      line_item_collection << line_item
+    else
+      params[:cart].each do |cart|
+        product = Product.find(cart)
+        line_item = {
+          name: product.name,
+          description: product.description,
+          amount: (product.cost_cents * (1 + (gst.gst_rate + pst.pst_rate))).to_i,
+          currency: 'cad',
+          quantity: 1
+        }
+        line_item_collection << line_item
+      end
+    end
+
+    @session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: line_item_collection,
+      success_url: checkout_success_url,
+      cancel_url: checkout_cancel_url
+    )
+
+    total_cost = 0
+
     puts(pst.inspect)
     order = Order.create(
       user_id: current_user.id,
@@ -27,41 +61,10 @@ class CheckoutController < ApplicationController
         purchase_price_cents: product.cost_cents,
         qty: 1
       )
-      total_cost += (product.cost_cents * (1 + (gst.gst_rate + pst.pst_rate)))
+      total_cost += product.cost_cents / 100
     end
+    order.update(total_cost: total_cost * (1 + (gst.gst_rate + pst.pst_rate)))
 
-    order.update(total_cost: total_cost)
-
-    line_item_collection = []
-    if product
-      line_item = {
-        name: product.name,
-        description: product.description,
-        amount: product.cost_cents,
-        currency: 'cad',
-        quantity: 1
-      }
-      line_item_collection << line_item
-    else
-      params[:cart]&.each do |cart|
-        product = Product.find(cart)
-        line_item = {
-          name: product.name,
-          description: product.description,
-          amount: product.cost_cents * (1 + (gst.gst_rate + pst.pst_rate)),
-          currency: 'cad',
-          quantity: 1
-        }
-        line_item_collection << line_item
-      end
-    end
-
-    @session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      line_items: line_item_collection,
-      success_url: checkout_success_url,
-      cancel_url: checkout_cancel_url
-    )
     session[:cart] = []
 
     respond_to do |format|
