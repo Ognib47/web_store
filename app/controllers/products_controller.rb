@@ -7,10 +7,10 @@ class ProductsController < ApplicationController
   def index
     @products = if params['category_id']
                   session[:catetory] = params['category_id']
-                  Product.includes(:category).where(category_id: params['category_id'])
+                  Product.includes(:category).where(category_id: params['category_id']).page(params[:page]).per(8)
                 else
                   session[:catetory] = ''
-                  Product.includes(:category).all
+                  Product.includes(:category).all.page(params[:page]).per(8)
                 end
   end
 
