@@ -1,6 +1,15 @@
 
 
 <h1>Order # <%= order.id %></h1>
+<details>
+<summary>products</summary>
+<ul>
 <% order.products.each do |product| %>
-  <%= link_to product.name, product %>
-<% end %>
+    <li>Product Name: <%= link_to product.name, product %></li>
+    <li>Product Cost: <%= number_to_currency(product.cost_cents/100)%></li>
+    <li>Product Decsription: <%= product.description %></li>
+  <% end %>
+</ul>
+
+</details>
+<p>Total Cost: <%= number_to_currency(order.total_cost) %></p>

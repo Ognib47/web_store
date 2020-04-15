@@ -1,20 +1,27 @@
-<div>
-  <ul class='in-line'>
-    <li><%= link_to 'Products', products_url %></li>
-    <li><div class="dropdown ">
-      <span>Categories</span>
-      <div class="dropdown-content">
-        <% Category.all.each do | category | %>
-          <p><%= link_to category.name, products_url(category_id: category.id) %></p>
-        <% end %>
+<% if user_signed_in? %>
+  <div>
+    <ul class='in-line'>
+      <li><%= link_to 'Products', products_url %></li>
+      <li><div class="dropdown ">
+        <span>Categories</span>
+        <div class="dropdown-content">
+          <% Category.all.each do | category | %>
+            <p><%= link_to category.name, products_url(category_id: category.id) %></p>
+          <% end %>
+        </div>
       </div>
-    </div>
-  </li>
-  <li>
-    <%= link_to 'Edit User', edit_user_registration_path %>
-  </li>
-  <li><%= link_to 'About', abouts_show_path %></li>
-  <li><%= link_to 'Contact', contacts_show_path %></li>
-  </ul>
-
-</div>
+    </li>
+    <li>
+      <%= link_to 'Edit User', edit_user_registration_path %>
+    </li>
+    <li><%= link_to 'About', abouts_show_path %></li>
+    <li><%= link_to 'Contact', contacts_show_path %></li>
+    <li><%= link_to 'Orders', orders_path %></li>
+    <% if user_signed_in? %>
+      <li>
+        <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>

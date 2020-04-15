@@ -1,1 +1,12 @@
-<h1>Success</h1>
+<% order = Order.last%>
+<h1>Invoice for Order # <%= order.id %></h1>
+
+<% order.products.each do |product|%>
+  <p>PRODUCT NAME: <%= link_to product.name, product %></p>
+  <p>PRODUCT COST: <%= number_to_currency(product.cost_cents / 100) %></p>
+  <p>PRODUCT DESCRIPTION: <%=  product.description %></p>
+<% end %>
+
+<h3>GST: <%= order.gst_rate %> <%= number_to_currency((order.total_cost) * order.gst_rate) %></h3>
+<h3>PST: <%= order.pst_rate %> <%= number_to_currency((order.total_cost) * order.pst_rate) %></h3>
+<h3>TOTAL COST: <%= order.total_cost %></h3>

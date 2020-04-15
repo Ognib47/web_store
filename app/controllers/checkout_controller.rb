@@ -62,7 +62,7 @@ class CheckoutController < ApplicationController
           purchase_price_cents: product.cost_cents,
           qty: 1
         )
-        total_cost += product.cost_cents / 100
+        total_cost += (product.cost_cents / 100)
       end
     else
       product = Product.find(params[:id])
