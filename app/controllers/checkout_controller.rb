@@ -54,7 +54,7 @@ class CheckoutController < ApplicationController
     )
 
     if params[:cart]
-      params[:cart]&.each do |cart|
+      params[:cart].each do |cart|
         product = Product.find(cart)
         Orderproduct.create(
           order_id: order.id,

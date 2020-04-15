@@ -9,4 +9,4 @@
 
 <h3>GST: <%= order.gst_rate %> <%= number_to_currency((order.total_cost) * order.gst_rate) %></h3>
 <h3>PST: <%= order.pst_rate %> <%= number_to_currency((order.total_cost) * order.pst_rate) %></h3>
-<h3>TOTAL COST: <%= order.total_cost %></h3>
+<h3>TOTAL COST: <%= number_to_currency(order.total_cost) %></h3>

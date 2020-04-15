@@ -7,6 +7,6 @@
       </li>
     <% end %>
   </ul>
-  <p><%= button_to 'Buy Items', checkout_create_path, params: {cart: @cart}, remote: true %></p>
+  <%= button_to 'Buy Items', checkout_create_path, params: {cart: @cart}, remote: true %>
 </details>
 
