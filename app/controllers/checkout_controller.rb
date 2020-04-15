@@ -47,22 +47,34 @@ class CheckoutController < ApplicationController
 
     total_cost = 0
 
-    puts(pst.inspect)
     order = Order.create(
       user_id: current_user.id,
       gst_rate: gst.gst_rate,
       pst_rate: pst.pst_rate
     )
-    params[:cart]&.each do |cart|
-      product = Product.find(cart)
+
+    if params[:cart]
+      params[:cart]&.each do |cart|
+        product = Product.find(cart)
+        Orderproduct.create(
+          order_id: order.id,
+          product_id: product.id,
+          purchase_price_cents: product.cost_cents,
+          qty: 1
+        )
+        total_cost += product.cost_cents / 100
+      end
+    else
+      product = Product.find(params[:id])
       Orderproduct.create(
         order_id: order.id,
         product_id: product.id,
         purchase_price_cents: product.cost_cents,
         qty: 1
       )
-      total_cost += product.cost_cents / 100
-    end
+      total_cost = product.cost_cents / 100
+  end
+
     order.update(total_cost: total_cost * (1 + (gst.gst_rate + pst.pst_rate)))
 
     session[:cart] = []
