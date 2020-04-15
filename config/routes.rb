@@ -15,12 +15,10 @@ Rails.application.routes.draw do
   resources 'categories', only: %i[index show]
   resources 'abouts', only: %i[show]
   resources 'contacts', only: %i[show]
+  resources 'orders', only: %i[index show]
   scope 'checkout' do
     post 'create', to: 'checkout#create', as: 'checkout_create'
     get 'success', to: 'checkout#success', as: 'checkout_success'
     get 'cancel', to: 'checkout#cancel', as: 'checkout_cancel'
   end
-  # get 'categories/index'
-  # get 'categories/show'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
