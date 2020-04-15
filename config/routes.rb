@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'contacts/show'
   get 'abouts/show'
   root to: 'pages#home'
   devise_for :users
@@ -12,7 +13,8 @@ Rails.application.routes.draw do
   post 'products/add_to_cart/:id', to: 'products#add_to_cart', as: 'add_to_cart'
   delete 'products/remove_from_cart/:id', to: 'products#remove_from_cart', as: 'remove_from_cart'
   resources 'categories', only: %i[index show]
-
+  resources 'abouts', only: %i[show]
+  resources 'contacts', only: %i[show]
   scope 'checkout' do
     post 'create', to: 'checkout#create', as: 'checkout_create'
     get 'success', to: 'checkout#success', as: 'checkout_success'
